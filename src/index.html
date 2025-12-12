@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NaffDev ClipLoop Studio</title>
+  <link rel="stylesheet" href="index.css">
+  <link rel="stylesheet" href="progress.css">
+  <link rel="stylesheet" href="button-group.css">
+  <link rel="stylesheet" href="video-preview.css">
+</head>
+
+<body>
+  <div class="app-container">
+    <!-- Left Panel - Controls -->
+    <div class="control-panel">
+      <div class="panel-header">
+        <div class="app-logo">
+          <img src="../assets/logo.png" alt="ClipLoop Studio" class="logo-image" onerror="this.style.display='none'">
+        </div>
+        <h1>🎬 NaffDev ClipLoop Studio</h1>
+        <p class="subtitle">Professional Video Looper by NaffDev</p>
+      </div>
+
+      <div class="form-container">
+        <!-- Folder Bahan -->
+        <div class="form-group">
+          <label for="bahanFolder">📁 Folder Bahan (Source)</label>
+          <div class="input-group">
+            <input type="text" id="bahanFolder" placeholder="Pilih folder sumber..." readonly>
+            <button id="btnSelectBahan" class="btn-select">Browse</button>
+          </div>
+        </div>
+
+        <!-- Folder Output -->
+        <div class="form-group">
+          <label for="outputFolder">💾 Folder Output</label>
+          <div class="input-group">
+            <input type="text" id="outputFolder" placeholder="Pilih folder output..." readonly>
+            <button id="btnSelectOutput" class="btn-select">Browse</button>
+          </div>
+        </div>
+
+        <!-- Video Selection -->
+        <div class="form-group">
+          <label for="videoSelect">🎥 Pilih Video</label>
+          <select id="videoSelect" disabled>
+            <option value="">-- Pilih video terlebih dahulu --</option>
+          </select>
+          <small class="hint" id="videoHint">Scan folder bahan terlebih dahulu</small>
+        </div>
+
+        <!-- Audio Count -->
+        <div class="form-group">
+          <label for="audioCount">🎵 Jumlah Audio yang Digunakan</label>
+          <input type="number" id="audioCount" min="1" value="3" disabled>
+          <small class="hint" id="audioHint">0 audio tersedia</small>
+        </div>
+
+        <!-- Random Audio Checkbox -->
+        <div class="form-group">
+          <label class="checkbox-label">
+            <input type="checkbox" id="randomAudio" disabled>
+            <span class="checkbox-text">🎲 Random Audio (jika tidak, urutkan A-Z)</span>
+          </label>
+        </div>
+
+        <!-- Transition Selection -->
+        <div class="form-group">
+          <label for="transitionSelect">✨ Efek Transisi Looping</label>
+          <select id="transitionSelect" disabled>
+            <option value="none">⚡ CEPAT - Tanpa Transisi (Super Fast - Instant!)</option>
+            <option value="fade" selected>🌟 SMOOTH - Fade (Rekomendasi - Halus & Elegan)</option>
+            <option value="fadeblack">🌑 SMOOTH - Fade to Black (Dramatis)</option>
+            <option value="slideleft">← SMOOTH - Slide Kiri (Modern)</option>
+            <option value="slideright">→ SMOOTH - Slide Kanan (Modern)</option>
+            <option value="blurfade">⭕ SMOOTH - Blur Fade (Artistik)</option>
+            <option value="zoom">🔍 SMOOTH - Zoom Effect (Dinamis)</option>
+          </select>
+          <small class="hint" style="margin-top: 8px; display: block;">
+            💡 <strong>Cepat</strong> = Instant (detik), <strong>Smooth</strong> = Cantik tapi lambat (menit)
+          </small>
+        </div>
+
+        <!-- Process Button -->
+        <div class="button-group">
+          <button id="btnProcess" class="btn-process" disabled>
+            <span class="btn-text">🚀 Start Processing</span>
+            <span class="btn-loader" style="display: none;">
+              <span class="spinner"></span> Processing...
+            </span>
+          </button>
+          <button id="btnStop" class="btn-stop" style="display: none;" disabled>
+            ⛔ Stop
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Right Panel - Progress & Logs -->
+    <div class="log-panel">
+      <!-- Progress Bar -->
+      <div class="progress-container" id="progressContainer" style="display: none;">
+        <div class="progress-label">
+          <span class="progress-text" id="progressText">Memproses...</span>
+          <span class="progress-percent" id="progressPercent">0%</span>
+        </div>
+
+        <div class="progress-bar-wrapper">
+          <div class="progress-bar">
+            <div class="progress-fill active" id="progressFill"></div>
+          </div>
+
+          <!-- Ruler Marks -->
+          <div class="progress-ruler" id="progressRuler">
+            <div class="ruler-mark major" data-value="0">
+              <div class="ruler-tick"></div>
+              <div class="ruler-label">0</div>
+            </div>
+            <div class="ruler-mark" data-value="10">
+              <div class="ruler-tick"></div>
+              <div class="ruler-label">10</div>
+            </div>
+            <div class="ruler-mark" data-value="20">
+              <div class="ruler-tick"></div>
+              <div class="ruler-label">20</div>
+            </div>
+            <div class="ruler-mark" data-value="30">
+              <div class="ruler-tick"></div>
+              <div class="ruler-label">30</div>
+            </div>
+            <div class="ruler-mark" data-value="40">
+              <div class="ruler-tick"></div>
+              <div class="ruler-label">40</div>
+            </div>
+            <div class="ruler-mark major" data-value="50">
+              <div class="ruler-tick"></div>
+              <div class="ruler-label">50</div>
+            </div>
+            <div class="ruler-mark" data-value="60">
+              <div class="ruler-tick"></div>
+              <div class="ruler-label">60</div>
+            </div>
+            <div class="ruler-mark" data-value="70">
+              <div class="ruler-tick"></div>
+              <div class="ruler-label">70</div>
+            </div>
+            <div class="ruler-mark" data-value="80">
+              <div class="ruler-tick"></div>
+              <div class="ruler-label">80</div>
+            </div>
+            <div class="ruler-mark" data-value="90">
+              <div class="ruler-tick"></div>
+              <div class="ruler-label">90</div>
+            </div>
+            <div class="ruler-mark major" data-value="100">
+              <div class="ruler-tick"></div>
+              <div class="ruler-label">100</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Progress Stages -->
+        <div class="progress-stages" id="progressStages">
+          <div class="stage" data-stage="scan">
+            <span class="stage-dot"></span>
+            <span>Scan</span>
+          </div>
+          <div class="stage" data-stage="audio">
+            <span class="stage-dot"></span>
+            <span>Audio</span>
+          </div>
+          <div class="stage" data-stage="video">
+            <span class="stage-dot"></span>
+            <span>Video</span>
+          </div>
+          <div class="stage" data-stage="merge">
+            <span class="stage-dot"></span>
+            <span>Merge</span>
+          </div>
+          <div class="stage" data-stage="done">
+            <span class="stage-dot"></span>
+            <span>Done</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Logs Header & Container -->
+      <div class="panel-header">
+        <h2>📋 Processing Logs</h2>
+        <button id="btnClearLogs" class="btn-clear-logs">Clear</button>
+      </div>
+      <div class="log-container" id="logContainer">
+        <div class="log-entry log-info">
+          <span class="log-time">00:00:00</span>
+          <span class="log-level">[INFO]</span>
+          <span class="log-message">
+            NaffDev ClipLoop Studio — Aplikasi resmi buatan <strong>NaffDev</strong>.
+            Aplikasi ini 100% GRATIS. Jika ada yang memperjualbelikannya, segera laporkan.
+            • Threads: <strong>@_nafimlna</strong>
+            • GitHub: <strong>Naff-Dev</strong>
+          </span>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer class="app-footer">
+    <button id="btnDonation" class="btn-donation">
+      ❤️ Kasih sedikit jajan ke developer
+    </button>
+  </footer>
+
+  <!-- Donation Modal -->
+  <div id="donationModal" class="modal-overlay">
+    <div class="modal-content">
+      <button class="modal-close" id="btnCloseModal">×</button>
+      <h2 class="modal-title">💝 Dukung Developer via QRIS</h2>
+      <p class="modal-subtitle">Terima kasih atas dukungannya! 🙏</p>
+      <div class="qris-container">
+        <img src="../assets/qris.png" alt="QRIS Code" class="qris-image" id="qrisImage">
+        <p class="qris-fallback" id="qrisFallback" style="display: none;">
+          QRIS image not found. Please add qris.png to the assets folder.
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <script src="renderer.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,250 @@
+/* ===================================
+   Progress Bar Styles - Right Panel
+   =================================== */
+
+.progress-container {
+    margin-bottom: var(--spacing-lg);
+    padding: var(--spacing-lg);
+    background: linear-gradient(135deg, #f8f9ff 0%, #f0f4ff 100%);
+    border-radius: var(--radius-lg);
+    border: 2px solid var(--color-primary);
+    box-shadow: 0 4px 12px rgba(99, 102, 241, 0.1);
+}
+
+.progress-label {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: var(--spacing-md);
+    font-size: 0.875rem;
+    color: var(--color-text-primary);
+    font-weight: 600;
+}
+
+.progress-text {
+    color: var(--color-primary);
+}
+
+.progress-percent {
+    color: var(--color-success);
+    font-weight: 700;
+    font-size: 1rem;
+}
+
+/* Ruler Style Progress Bar */
+.progress-bar-wrapper {
+    position: relative;
+    margin-bottom: var(--spacing-sm);
+}
+
+.progress-bar {
+    position: relative;
+    width: 100%;
+    height: 32px;
+    background: linear-gradient(to right, #e0e7ff, #f0f4ff);
+    border-radius: 8px;
+    overflow: visible;
+    box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.06);
+    border: 2px solid var(--color-border);
+}
+
+.progress-fill {
+    height: 100%;
+    width: 0%;
+    background: linear-gradient(90deg, var(--color-primary) 0%, var(--color-primary-light) 50%, var(--color-primary) 100%);
+    background-size: 200% 100%;
+    border-radius: 6px;
+    transition: width 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow:
+        0 0 20px rgba(99, 102, 241, 0.4),
+        inset 0 1px 0 rgba(255, 255, 255, 0.3);
+    position: relative;
+    animation: shimmer 2s linear infinite;
+}
+
+@keyframes shimmer {
+    0% {
+        background-position: 200% 0;
+    }
+
+    100% {
+        background-position: -200% 0;
+    }
+}
+
+.progress-fill::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    width: 30px;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3));
+    border-radius: 0 6px 6px 0;
+}
+
+/* Ruler Marks */
+.progress-ruler {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: relative;
+    margin-top: var(--spacing-sm);
+    padding: 0 4px;
+}
+
+.ruler-mark {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+    flex: 1;
+}
+
+.ruler-mark:first-child {
+    align-items: flex-start;
+}
+
+.ruler-mark:last-child {
+    align-items: flex-end;
+}
+
+.ruler-tick {
+    width: 2px;
+    height: 12px;
+    background: var(--color-border);
+    margin-bottom: 4px;
+    border-radius: 1px;
+}
+
+.ruler-mark.major .ruler-tick {
+    height: 16px;
+    width: 3px;
+    background: var(--color-primary);
+}
+
+.ruler-label {
+    font-size: 0.75rem;
+    color: var(--color-text-secondary);
+    font-weight: 500;
+    user-select: none;
+}
+
+.ruler-mark.major .ruler-label {
+    color: var(--color-primary);
+    font-weight: 700;
+    font-size: 0.8125rem;
+}
+
+/* Active state for current progress */
+.ruler-mark.active .ruler-tick {
+    background: var(--color-success);
+    box-shadow: 0 0 8px var(--color-success);
+}
+
+.ruler-mark.active .ruler-label {
+    color: var(--color-success);
+    font-weight: 700;
+}
+
+/* Pulse animation for active progress */
+.progress-fill.active {
+    animation: shimmer 2s linear infinite, pulse 1.5s ease-in-out infinite;
+}
+
+@keyframes pulse {
+
+    0%,
+    100% {
+        box-shadow:
+            0 0 20px rgba(99, 102, 241, 0.4),
+            inset 0 1px 0 rgba(255, 255, 255, 0.3);
+    }
+
+    50% {
+        box-shadow:
+            0 0 30px rgba(99, 102, 241, 0.6),
+            inset 0 1px 0 rgba(255, 255, 255, 0.5);
+    }
+}
+
+/* Stage Labels */
+.progress-stages {
+    display: flex;
+    justify-content: space-between;
+    margin-top: var(--spacing-md);
+    padding: var(--spacing-sm);
+    background: var(--color-bg-input);
+    border-radius: var(--radius-md);
+    font-size: 0.75rem;
+}
+
+.stage {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    color: var(--color-text-hint);
+    transition: all var(--transition-base);
+}
+
+.stage.active {
+    color: var(--color-primary);
+    font-weight: 600;
+}
+
+.stage.completed {
+    color: var(--color-success);
+}
+
+.stage-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--color-border);
+    transition: all var(--transition-base);
+}
+
+.stage.active .stage-dot {
+    background: var(--color-primary);
+    box-shadow: 0 0 8px var(--color-primary);
+    animation: pulse-dot 1s ease-in-out infinite;
+}
+
+.stage.completed .stage-dot {
+    background: var(--color-success);
+}
+
+@keyframes pulse-dot {
+
+    0%,
+    100% {
+        transform: scale(1);
+    }
+
+    50% {
+        transform: scale(1.3);
+    }
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .progress-ruler {
+        padding: 0 2px;
+    }
+
+    .ruler-label {
+        font-size: 0.625rem;
+    }
+
+    .ruler-mark.major .ruler-label {
+        font-size: 0.75rem;
+    }
+
+    .progress-stages {
+        flex-wrap: wrap;
+        gap: var(--spacing-xs);
+    }
+
+    .stage {
+        font-size: 0.6875rem;
+    }
+}
